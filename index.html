@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b16">
+<title>CloudVex — Cloud Gaming</title>
+<style>
+:root{color-scheme:dark;--bg:#080b16;--panel:#111729;--cyan:#57e6ff;--purple:#9c7bff;--muted:#a6b0c8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:system-ui,Arial,sans-serif}
+header{padding:20px 18px;border-bottom:1px solid #252d43;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:23px;font-weight:900;letter-spacing:-1px}
+.logo span{color:var(--cyan)}
+.pill{font-size:11px;border:1px solid #35415b;border-radius:20px;padding:7px 10px;color:var(--cyan)}
+main{padding:22px 16px;max-width:900px;margin:auto}
+.hero{padding:25px 20px;border:1px solid #34305e;border-radius:22px;background:linear-gradient(135deg,#192447,#211638 65%,#102332)}
+.eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:2px}
+h1{font-size:35px;line-height:1.08;margin:12px 0}
+p{color:var(--muted);line-height:1.55}
+button,input{font:inherit}
+.search{width:100%;padding:14px;margin:22px 0;background:var(--panel);border:1px solid #303951;border-radius:12px;color:white;outline:none}
+h2{font-size:20px;margin:22px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.game{background:var(--panel);border:1px solid #252e46;border-radius:17px;overflow:hidden;min-width:0}
+.art{height:115px;display:grid;place-items:center;font-size:48px;background:linear-gradient(135deg,#243c68,#4a285f)}
+.game:nth-child(2) .art{background:linear-gradient(135deg,#48253e,#1e315c)}
+.game:nth-child(3) .art{background:linear-gradient(135deg,#17535a,#28234f)}
+.game:nth-child(4) .art{background:linear-gradient(135deg,#553b20,#352251)}
+.info{padding:12px}
+.info h3{font-size:15px;margin:0 0 6px}
+.info p{font-size:12px;margin:0 0 12px;min-height:36px}
+.play{width:100%;border:0;border-radius:9px;padding:10px;background:linear-gradient(90deg,#58e8ff,#9c7bff);color:#090c18;font-weight:800}
+.status{font-size:11px;color:#ffd68a;margin-bottom:9px}
+.notice{padding:14px;border:1px solid #303951;border-radius:12px;font-size:13px;color:var(--muted);margin-top:20px}
+footer{text-align:center;color:#74809a;font-size:12px;padding:28px 10px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.art{height:145px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">☁️ CLOUD<span>VEX</span></div>
+  <div class="pill">BETA · v0.1</div>
+</header>
+<main>
+  <section class="hero">
+    <div class="eyebrow">YOUR GAMING UNIVERSE</div>
+    <h1>Play beyond<br>your device. 🎮</h1>
+    <p>One library. Endless adventures.<br>Your personal gaming hub starts here.</p>
+  </section>
+
+  <input id="search" class="search" placeholder="🔎 Search your games..." aria-label="Search games">
+
+  <h2>🎮 Game Library</h2>
+  <div class="grid" id="games">
+    <article class="game" data-name="pokemon">
+      <div class="art">⚡</div><div class="info">
+        <h3>Pokémon Games</h3><div class="status">SERVER NOT CONNECTED</div>
+        <p>Explore Pokémon adventures.</p>
+        <button class="play" onclick="info('Pokémon')">Play</button>
+      </div>
+    </article>
+    <article class="game" data-name="naruto storm 4">
+      <div class="art">🍥</div><div class="info">
+        <h3>Naruto Storm 4</h3><div class="status">SERVER NOT CONNECTED</div>
+        <p>Enter the ninja battlefield.</p>
+        <button class="play" onclick="info('Naruto Storm 4')">Play</button>
+      </div>
+    </article>
+    <article class="game" data-name="racing">
+      <div class="art">🏎️</div><div class="info">
+        <h3>Racing Zone</h3><div class="status">DEMO SLOT</div>
+        <p>Speed into your next adventure.</p>
+        <button class="play" onclick="info('Racing Zone')">Play</button>
+      </div>
+    </article>
+    <article class="game" data-name="adventure">
+      <div class="art">🗺️</div><div class="info">
+        <h3>Adventure World</h3><div class="status">DEMO SLOT</div>
+        <p>Discover new worlds and quests.</p>
+        <button class="play" onclick="info('Adventure World')">Play</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="notice" id="message">
+    ☁️ <b>Cloud status:</b> Interface online. No gaming server connected yet.
+  </div>
+</main>
+<footer>CloudVex © 2026 · Built for players, on mobile.</footer>
+<script>
+function info(name){
+ document.getElementById('message').textContent =
+ '🎮 '+name+': This game slot is not connected to a gaming server yet. The dashboard is working; streaming will be added separately.';
+}
+document.getElementById('search').addEventListener('input',function(){
+ const q=this.value.toLowerCase().trim();
+ document.querySelectorAll('.game').forEach(card=>{
+  card.style.display=card.dataset.name.includes(q)?'':'none';
+ });
+});
+</script>
+</body>
+</html>
