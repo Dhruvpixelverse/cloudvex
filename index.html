@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b16">
+  <meta name="description" content="CloudVex is your premium gaming discovery hub. Explore games and connect a compatible cloud gaming service.">
+  <meta name="color-scheme" content="dark">
+  <title>CloudVex — Play Beyond Limits</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080b16;
+      --panel: #101629;
+      --panel-2: #151d34;
+      --text: #f5f7ff;
+      --muted: #a2acc6;
+      --accent: #8c7bff;
+      --accent-2: #42e8f5;
+      --border: rgba(255,255,255,.09);
+      --shadow: 0 18px 55px rgba(0,0,0,.28);
+      --radius: 22px;
+      --max-width: 1440px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 5% 0%, rgba(113,83,255,.15), transparent 35rem),
+        radial-gradient(ellipse at 95% 30%, rgba(45,220,240,.08), transparent 35rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button, a, input, select {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+      outline: 3px solid var(--accent-2);
+      outline-offset: 3px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .55;
+    }
+
+    .app {
+      width: min(100% - 32px, var(--max-width));
+      margin: auto;
+    }
+
+    .topbar {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 900;
+      font-size: 23px;
+      letter-spacing: -.8px;
+    }
+
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), #4838b9);
+      box-shadow: 0 0 30px rgba(140,123,255,.25);
+      font-size: 22px;
+    }
+
+    .brand em {
+      font-style: normal;
+      color: var(--accent-2);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+      transition: color .2s;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .icon-button,
+    .secondary-button,
+    .primary-button,
+    .filter-button {
+      min-height: 43px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: transform .2s, border-color .2s, background .2s;
+    }
+
+    .icon-button:hover,
+    .secondary-button:hover,
+    .filter-button:hover {
+      border-color: var(--accent);
+    }
+
+    .icon-button:active,
+    .secondary-button:active,
+    .primary-button:active,
+    .filter-button:active {
+      transform: scale(.98);
+    }
+
+    .icon-button,
+    .secondary-button,
+    .filter-button {
+      background: rgba(255,255,255,.035);
+    }
+
+    .primary-button {
+      border: 0;
+      background: linear-gradient(110deg, var(--accent), #6653e9);
+      box-shadow: 0 8px 28px rgba(120,100,255,.2);
+      font-weight: 800;
+    }
+
+    .primary-button:hover {
+      filter: brightness(1.12);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,.035);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffbd69;
+      box-shadow: 0 0 10px rgba(255,189,105,.4);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 28px;
+      padding: clamp(27px, 6vw, 68px);
+      border: 1px solid rgba(173,155,255,.2);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 80% 40%, rgba(93,76,214,.24), transparent 22rem),
+        linear-gradient(120deg, #15172d, #10162b 58%, #101d32);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      right: -120px;
+      top: -120px;
+      border: 1px solid rgba(100,225,255,.18);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 35px rgba(100,225,255,.025),
+        0 0 0 70px rgba(100,225,255,.02);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      color: var(--accent-2);
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 17px 0;
+      font-size: clamp(38px, 7vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -3px;
+    }
+
+    .gradient-text {
+      color: var(--accent-2);
+      background: linear-gradient(100deg, #a9a0ff, #57f1f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 580px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .hero-art {
+      position: absolute;
+      right: 7%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(120px, 23vw, 265px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 40%;
+      background: linear-gradient(145deg, rgba(140,123,255,.13), rgba(66,232,245,.04));
+      border: 1px solid rgba(255,255,255,.09);
+      font-size: clamp(65px, 12vw, 130px);
+      filter: drop-shadow(0 0 35px rgba(130,110,255,.2));
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 18px;
+      padding: 15px 17px;
+      border: 1px solid rgba(255,189,105,.2);
+      border-radius: 16px;
+      background: rgba(255,189,105,.055);
+      color: #e8d9c5;
+      font-size: 13px;
+    }
+
+    .notice strong {
+      color: #ffd49b;
+    }
+
+    .section {
+      margin-top: 43px;
+      scroll-margin-top: 20px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(23px, 4vw, 31px);
+      letter-spacing: -1px;
+    }
+
+    .section-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: min(100%, 370px);
+      min-height: 46px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .search-wrap span {
+      color: var(--muted);
+    }
+
+    .search-wrap input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .search-wrap input:focus-visible {
+      outline: none;
+    }
+
+    .filters {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding: 3px 2px 12px;
+      scrollbar-width: thin;
+    }
+
+    .filter-button {
+      flex: 0 0 auto;
+      min-height: 39px;
+      padding: 8px 14px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .filter-button.active {
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(110deg, var(--accent), #6553e0);
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .game-card {
+      overflow: hidden;
+      min-width: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(22,29,52,.98), rgba(13,18,34,.98));
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(140,123,255,.48);
+      box-shadow: 0 18px 38px rgba(0,0,0,.2);
+    }
+
+    .game-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 160px;
+      aspect-ratio: 1.75 / 1;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 70%, var(--art-glow), transparent 65%),
+        linear-gradient(135deg, var(--art-a), var(--art-b));
+    }
+
+    .game-art::before,
+    .game-art::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 42%;
+      transform: rotate(35deg);
+    }
+
+    .game-art::after {
+      width: 135px;
+      height: 135px;
+      transform: rotate(65deg);
+    }
+
+    .game-symbol {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(52px, 7vw, 82px);
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,.28));
+    }
+
+    .game-badge {
+      position: absolute;
+      z-index: 2;
+      top: 12px;
+      left: 12px;
+      padding: 6px 9px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 9px;
+      background: rgba(8,11,22,.65);
+      backdrop-filter: blur(8px);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+    }
+
+    .favorite-button {
+      position: absolute;
+      z-index: 2;
+      top: 10px;
+      right: 10px;
+      display: grid;
+      place-items: center;
+      width: 39px;
+      height: 39px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 12px;
+      background: rgba(8,11,22,.68);
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .favorite-button[aria-pressed="true"] {
+      color: #ff8cb7;
+    }
+
+    .game-info {
+      padding: 17px;
+    }
+
+    .game-info h3 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: -.3px;
+    }
+
+    .game-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 10px 0 15px;
+    }
+
+    .game-meta span {
+      padding: 5px 8px;
+      border-radius: 7px;
+      background: rgba(255,255,255,.045);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .game-description {
+      min-height: 39px;
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .game-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .game-actions button {
+      min-width: 0;
+      padding: 10px 7px;
+      font-size: 12px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 40px 20px;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 19px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .feature-card {
+      padding: 21px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(17,23,42,.72);
+    }
+
+    .feature-icon {
+      font-size: 26px;
+    }
+
+    .feature-card h3 {
+      margin: 12px 0 7px;
+      font-size: 16px;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .settings-panel {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--panel);
+    }
+
+    .setting-row label {
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .setting-row small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .setting-row select {
+      max-width: 140px;
+      padding: 9px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel-2);
+      color: var(--text);
+    }
+
+    input[type="checkbox"] {
+      width: 21px;
+      height: 21px;
+      accent-color: var(--accent);
+    }
+
+    .connection-panel {
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(120deg, var(--panel), #12162a);
+    }
+
+    .connection-panel h3 {
+      margin-top: 0;
+    }
+
+    .connection-panel p,
+    .connection-panel li {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .connection-panel ol {
+      padding-left: 22px;
+    }
+
+    .connection-panel li {
+      margin: 9px 0;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 50px;
+      padding: 25px 0 35px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: var(--text);
+    }
+
+    dialog {
+      width: min(92vw, 520px);
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--panel);
+      color: var(--text);
+      box-shadow: var(--shadow);
+    }
+
+    dialog::backdrop {
+      background: rgba(2,4,12,.78);
+      backdrop-filter: blur(7px);
+    }
+
+    .modal-content {
+      padding: 24px;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+    }
+
+    .modal-content p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .toast-region {
+      position: fixed;
+      z-index: 100;
+      right: 16px;
+      bottom: max(16px, env(safe-area-inset-bottom));
+      display: grid;
+      gap: 8px;
+      width: min(360px, calc(100vw - 32px));
+      pointer-events: none;
+    }
+
+    .toast {
+      padding: 13px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #161d32;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      animation: toast-in .2s ease-out;
+    }
+
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .light-theme {
+      color-scheme: light;
+      --bg: #f2f4ff;
+      --panel: #ffffff;
+      --panel-2: #edf0ff;
+      --text: #171b31;
+      --muted: #5e6680;
+      --border: rgba(35,45,90,.14);
+      --shadow: 0 18px 55px rgba(36,44,95,.1);
+    }
+
+    .light-theme body {
+      background: var(--bg);
+    }
+
+    .light-theme .hero {
+      background: linear-gradient(120deg, #e5e7ff, #e3faff);
+    }
+
+    .light-theme .hero p,
+    .light-theme .notice {
+      color: #414967;
+    }
+
+    .light-theme .notice {
+      background: #fff7e8;
+    }
+
+    .light-theme .feature-card,
+    .light-theme .game-card,
+    .light-theme .connection-panel {
+      background: var(--panel);
+    }
+
+    .light-theme dialog {
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    @media (max-width: 900px) {
+      .hero-art {
+        right: 4%;
+        opacity: .55;
+      }
+
+      .hero-content {
+        max-width: 78%;
+      }
+
+      .game-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app {
+        width: min(100% - 22px, var(--max-width));
+      }
+
+      .topbar {
+        min-height: 67px;
+      }
+
+      .brand {
+        font-size: 20px;
+      }
+
+      .brand-icon {
+        width: 38px;
+        height: 38px;
+      }
+
+      .nav {
+        gap: 10px;
+      }
+
+      .nav a {
+        display: none;
+      }
+
+      .nav .status {
+        font-size: 10px;
+        padding: 7px 9px;
+      }
+
+      .hero {
+        margin-top: 18px;
+        padding: 28px 20px;
+        border-radius: 23px;
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero-art {
+        right: -25px;
+        top: 20px;
+        transform: none;
+        width: 115px;
+        opacity: .16;
+      }
+
+      .hero h1 {
+        max-width: 440px;
+        font-size: clamp(38px, 11vw, 57px);
+        letter-spacing: -2px;
+      }
+
+      .hero p {
+        font-size: 14px;
+      }
+
+      .hero-actions button {
+        flex: 1;
+      }
+
+      .section {
+        margin-top: 32px;
+      }
+
+      .section-heading {
+        align-items: stretch;
+      }
+
+      .search-wrap {
+        width: 100%;
+      }
+
+      .game-grid {
+        gap: 10px;
+      }
+
+      .game-art {
+        min-height: 115px;
+      }
+
+      .game-info {
+        padding: 12px;
+      }
+
+      .game-info h3 {
+        font-size: 14px;
+      }
+
+      .game-description {
+        min-height: 55px;
+        font-size: 11px;
+      }
+
+      .game-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .game-actions button {
+        min-height: 39px;
+      }
+
+      .feature-grid,
+      .settings-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card {
+        padding: 17px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .game-art {
+        aspect-ratio: 1.8 / 1;
+      }
+
+      .game-description {
+        min-height: 0;
+      }
+
+      .game-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="CloudVex home">
+        <span class="brand-icon" aria-hidden="true">☁</span>
+        <span>Cloud<em>Vex</em></span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#games">Discover</a>
+        <a href="#features">Features</a>
+        <a href="#settings">Settings</a>
+
+        <span class="status">
+          <span class="status-dot" aria-hidden="true"></span>
+          Preview mode
+        </span>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-art" aria-hidden="true">🎮</div>
+
+        <div class="hero-content">
+          <div class="eyebrow">Your next level starts here</div>
+
+          <h1 id="hero-title">
+            Play beyond<br>
+            <span class="gradient-text">limits.</span>
+          </h1>
+
+          <p>
+            Discover your gaming universe in one place.
+            Explore adventures, save favourites and get ready
+            for a connected cloud gaming experience.
+          </p>
+
+          <div class="hero-actions">
+            <button class="primary-button" id="exploreButton">
+              Explore games ↗
+            </button>
+
+            <button class="secondary-button" id="connectionButton">
+              Connection status
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="notice" role="status">
+        <span aria-hidden="true">⚠️</span>
+        <div>
+          <strong>Streaming server not connected</strong><br>
+          CloudVex is currently a gaming discovery interface.
+          Actual game streaming requires a compatible backend or
+          cloud gaming provider and legitimate access to the games.
+        </div>
+      </div>
+
+      <section class="section" id="games" aria-labelledby="games-title">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Your next adventure</div>
+            <h2 id="games-title">Explore games</h2>
+            <p id="gameCount">Discover your next favourite.</p>
+          </div>
+
+          <label class="search-wrap">
+            <span aria-hidden="true">⌕</span>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Search games..."
+              autocomplete="off"
+              aria-label="Search games"
+            >
+          </label>
+        </div>
+
+        <div class="filters" id="filters" aria-label="Game categories">
+          <button class="filter-button active" data-category="All" aria-pressed="true">All games</button>
+          <button class="filter-button" data-category="Adventure" aria-pressed="false">Adventure</button>
+          <button class="filter-button" data-category="Anime" aria-pressed="false">Anime</button>
+          <button class="filter-button" data-category="Action" aria-pressed="false">Action</button>
+          <button class="filter-button" data-category="RPG" aria-pressed="false">RPG</button>
+          <button class="filter-button" data-category="Favourites" aria-pressed="false">♥ Favourites</button>
+        </div>
+
+        <div class="game-grid" id="gameGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="section" id="features" aria-labelledby="features-title">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Built for your setup</div>
+            <h2 id="features-title">The CloudVex experience</h2>
+            <p>A gaming hub designed for discovery and customization.</p>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📱</div>
+            <h3>Mobile-first design</h3>
+            <p>A responsive interface designed to work on phones, tablets and desktop screens.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🔎</div>
+            <h3>Find your game</h3>
+            <p>Search the catalogue and filter games by category to discover new adventures.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">💜</div>
+            <h3>Your personal hub</h3>
+            <p>Save favourites and preferences locally on this device.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">⚙️</div>
+            <h3>Customizable interface</h3>
+            <p>Choose a visual theme and reduce motion if you prefer fewer animations.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📦</div>
+            <h3>App-ready foundation</h3>
+            <p>Manifest and service-worker integration support installation and limited offline access on compatible browsers.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🛡️</div>
+            <h3>Honest connection status</h3>
+            <p>CloudVex distinguishes the catalogue interface from an actual game streaming service.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="connection" aria-labelledby="connection-title">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Streaming setup</div>
+            <h2 id="connection-title">Connect your gaming experience</h2>
+            <p>What is required before games can actually stream?</p>
+          </div>
+        </div>
+
+        <div class="connection-panel">
+          <h3>☁️ Streaming is not connected yet</h3>
+
+          <p>
+            A website cannot run demanding PC games merely by displaying
+            a game card. A working cloud gaming experience needs a game
+            host or compatible streaming provider.
+          </p>
+
+          <ol>
+            <li>Choose a legitimate cloud gaming or remote-play service that supports your device and the game you want.</li>
+            <li>Check its current price, availability in your region, playtime limits and supported games.</li>
+            <li>Connect through the provider's supported integration or launch its official service.</li>
+            <li>Test your network and controls before expecting smooth gameplay.</li>
+          </ol>
+
+          <p>
+            <strong>Free and unlimited:</strong> This cannot be guaranteed.
+            Free tiers may have queues, session limits or restricted game
+            libraries. CloudVex does not currently provide a gaming server.
+          </p>
+
+          <button class="secondary-button" id="learnConnection">
+            View connection details
+          </button>
+        </div>
+      </section>
+
+      <section class="section" id="settings" aria-labelledby="settings-title">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Make it yours</div>
+            <h2 id="settings-title">Settings</h2>
+            <p>Your interface preferences are saved on this device.</p>
+          </div>
+        </div>
+
+        <div class="settings-panel">
+          <div class="setting-row">
+            <div>
+              <label for="themeSelect">Interface theme</label>
+              <small>Choose your preferred accent.</small>
+            </div>
+
+            <select id="themeSelect">
+              <option value="purple">Neon purple</option>
+              <option value="cyan">Cyber cyan</option>
+              <option value="pink">Neon pink</option>
+              <option value="green">Matrix green</option>
+            </select>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <label for="lightToggle">Light mode</label>
+              <small>Switch between light and dark.</small>
+            </div>
+            <input id="lightToggle" type="checkbox" aria-label="Enable light mode">
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <label for="motionToggle">Reduce animations</label>
+              <small>Use fewer interface transitions.</small>
+            </div>
+            <input id="motionToggle" type="checkbox" aria-label="Reduce animations">
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <label>Saved favourites</label>
+              <small id="favoriteCount">0 saved games</small>
+            </div>
+            <button class="secondary-button" id="clearFavorites">Clear</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        <strong>☁ CloudVex</strong><br>
+        Play beyond limits.
+      </div>
+
+      <div>
+        Gaming discovery interface · Streaming server not connected
+      </div>
+
+      <div>
+        © <span id="year"></span> CloudVex
+      </div>
+    </footer>
+  </div>
+
+  <dialog id="gameDialog" aria-labelledby="dialogTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <div class="eyebrow" id="dialogCategory">Game details</div>
+          <h2 id="dialogTitle">Game title</h2>
+        </div>
+
+        <button class="icon-button" id="closeDialog" aria-label="Close details">✕</button>
+      </div>
+
+      <p id="dialogDescription"></p>
+      <p id="dialogAvailability"></p>
+
+      <div class="modal-actions">
+        <button class="primary-button" id="dialogPlay">Check availability</button>
+        <button class="secondary-button" id="dialogFavorite">♡ Add favourite</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    "use strict";
+
+    /*
+     * CloudVex configuration
+     * Add verified game information here as the catalogue grows.
+     * Empty playUrl means there is no configured launch integration.
+     */
+
+    const CONFIG = {
+      storageKey: "cloudvex-master-elite-v1",
+      games: [
+        {
+          id: "pokemon",
+          title: "Pokémon Adventures",
+          category: "Adventure",
+          tags: ["Creature collecting", "Adventure"],
+          symbol: "⚡",
+          artA: "#182f69",
+          artB: "#28184d",
+          glow: "rgba(255,211,78,.32)",
+          description: "Explore creature-collecting adventures. This catalogue entry does not provide a Pokémon game or emulator.",
+          availability: "No game launch or streaming integration configured.",
+          playUrl: ""
+        },
+        {
+          id: "naruto",
+          title: "Naruto: Ninja Adventures",
+          category: "Anime",
+          tags: ["Anime", "Fighting"],
+          symbol: "🍥",
+          artA: "#67321e",
+          artB: "#301d49",
+          glow: "rgba(255,135,50,.34)",
+          description: "Discover anime-inspired ninja adventures. This is a catalogue preview, not the actual game.",
+          availability: "No game launch or streaming integration configured.",
+          playUrl: ""
+        },
+        {
+          id: "storm4",
+          title: "Ninja Storm 4",
+          category: "Action",
+          tags: ["Fighting", "Action"],
+          symbol: "⚔️",
+          artA: "#25316d",
+          artB: "#411d59",
+          glow: "rgba(85,205,255,.3)",
+          description: "A fighting-game catalogue entry inspired by high-energy anime battles.",
+          availability: "Requires a compatible service and legitimate game access.",
+          playUrl: ""
+        },
+        {
+          id: "fantasy",
+          title: "Fantasy Realms",
+          category: "RPG",
+          tags: ["RPG", "Exploration"],
+          symbol: "🐉",
+          artA: "#164b4c",
+          artB: "#20214c",
+          glow: "rgba(66,255,193,.28)",
+          description: "A fantasy RPG discovery card for exploring worlds and quests.",
+          availability: "Demo catalogue entry; no game executable is included.",
+          playUrl: ""
+        },
+        {
+          id: "galaxy",
+          title: "Galaxy Explorers",
+          category: "Adventure",
+          tags: ["Space", "Exploration"],
+          symbol: "🚀",
+          artA: "#25245f",
+          artB: "#132f48",
+          glow: "rgba(91,191,255,.35)",
+          description: "Discover space-themed adventures across a universe of possibilities.",
+          availability: "Demo catalogue entry; no streaming host is configured.",
+          playUrl: ""
+        },
+        {
+          id: "arena",
+          title: "Cyber Arena",
+          category: "Action",
+          tags: ["Action", "Competitive"],
+          symbol: "🎯",
+          artA: "#4a1d54",
+          artB: "#172c4d",
+          glow: "rgba(255,92,194,.3)",
+          description: "An action-game discovery card with a futuristic arena theme.",
+          availability: "Demo catalogue entry; no game launch integration is configured.",
+          playUrl: ""
+        }
+      ]
+    };
+
+    const THEMES = {
+      purple: { accent: "#8c7bff", accent2: "#42e8f5" },
+      cyan:   { accent: "#16bfe0", accent2: "#8df7ff" },
+      pink:   { accent: "#ec68c8", accent2: "#ffb3e9" },
+      green:  { accent: "#31cf91", accent2: "#9effcf" }
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+
+    const state = {
+      category: "All",
+      query: "",
+      selectedGameId: null,
+      favorites: new Set(),
+      settings: {
+        theme: "purple",
+        lightMode: false,
+        reduceMotion: false
+      }
+    };
+
+    function loadPreferences() {
+      try {
+        const saved = localStorage.getItem(CONFIG.storageKey);
+
+        if (!saved) return;
+
+        const data = JSON.parse(saved);
+
+        if (Array.isArray(data.favorites)) {
+          state.favorites = new Set(
+            data.favorites.filter(id =>
+              CONFIG.games.some(game => game.id === id)
+            )
+          );
+        }
+
+        if (data.settings && typeof data.settings === "object") {
+          const s = data.settings;
+
+          if (THEMES[s.theme]) state.settings.theme = s.theme;
+          state.settings.lightMode = s.lightMode === true;
+          state.settings.reduceMotion = s.reduceMotion === true;
+        }
+      } catch (error) {
+        console.warn("CloudVex: Preferences could not be loaded.", error);
+      }
+    }
+
+    function savePreferences() {
+      try {
+        localStorage.setItem(CONFIG.storageKey, JSON.stringify({
+          favorites: [...state.favorites],
+          settings: state.settings
+        }));
+      } catch (error) {
+        showToast("Preferences could not be saved on this device.");
+        console.warn("CloudVex: Preferences could not be saved.", error);
+      }
+
+      updateFavoriteCount();
+    }
+
+    function applySettings() {
+      const theme = THEMES[state.settings.theme] || THEMES.purple;
+
+      document.documentElement.style.setProperty("--accent", theme.accent);
+      document.documentElement.style.setProperty("--accent-2", theme.accent2);
+
+      document.documentElement.classList.toggle(
+        "light-theme",
+        state.settings.lightMode
+      );
+
+      document.documentElement.classList.toggle(
+        "reduce-motion",
+        state.settings.reduceMotion
+      );
+
+      $("#themeSelect").value = state.settings.theme;
+      $("#lightToggle").checked = state.settings.lightMode;
+      $("#motionToggle").checked = state.settings.reduceMotion;
+    }
+
+    function showToast(message) {
+      const region = $("#toastRegion");
+      const toast = document.createElement("div");
+
+      toast.className = "toast";
+      toast.textContent = message;
+      region.appendChild(toast);
+
+      window.setTimeout(() => toast.remove(), 3600);
+    }
+
+    function updateFavoriteCount() {
+      const count = state.favorites.size;
+
+      $("#favoriteCount").textContent =
+        `${count} saved game${count === 1 ? "" : "s"}`;
+    }
+
+    function getVisibleGames() {
+      const query = state.query.trim().toLowerCase();
+
+      return CONFIG.games.filter(game => {
+        const categoryMatch =
+          state.category === "All" ||
+          (state.category === "Favourites" &&
+            state.favorites.has(game.id)) ||
+          game.category === state.category;
+
+        const searchable = [
+          game.title,
+          game.category,
+          game.description,
+          ...game.tags
+        ].join(" ").toLowerCase();
+
+        return categoryMatch && (!query || searchable.includes(query));
+      });
+    }
+
+    function createGameCard(game) {
+      const card = document.createElement("article");
+      card.className = "game-card";
+
+      const art = document.createElement("div");
+      art.className = "game-art";
+      art.style.setProperty("--art-a", game.artA);
+      art.style.setProperty("--art-b", game.artB);
+      art.style.setProperty("--art-glow", game.glow);
+
+      const badge = document.createElement("span");
+      badge.className = "game-badge";
+      badge.textContent = game.category;
+
+      const symbol = document.createElement("span");
+      symbol.className = "game-symbol";
+      symbol.setAttribute("aria-hidden", "true");
+      symbol.textContent = game.symbol;
+
+      const favorite = document.createElement("button");
+      favorite.className = "favorite-button";
+      favorite.type = "button";
+      favorite.dataset.favorite = game.id;
+      favorite.setAttribute(
+        "aria-pressed",
+        String(state.favorites.has(game.id))
+      );
+      favorite.setAttribute(
+        "aria-label",
+        state.favorites.has(game.id)
+          ? `Remove ${game.title} from favourites`
+          : `Add ${game.title} to favourites`
+      );
+      favorite.textContent = state.favorites.has(game.id) ? "♥" : "♡";
+
+      art.append(badge, symbol, favorite);
+
+      const info = document.createElement("div");
+      info.className = "game-info";
+
+      const title = document.createElement("h3");
+      title.textContent = game.title;
+
+      const meta = document.createElement("div");
+      meta.className = "game-meta";
+
+      game.tags.forEach(tag => {
+        const chip = document.createElement("span");
+        chip.textContent = tag;
+        meta.appendChild(chip);
+      });
+
+      const description = document.createElement("p");
+      description.className = "game-description";
+      description.textContent = game.description;
+
+      const actions = document.createElement("div");
+      actions.className = "game-actions";
+
+      const details = document.createElement("button");
+      details.className = "secondary-button";
+      details.type = "button";
+      details.dataset.details = game.id;
+      details.textContent = "Game details";
+
+      const play = document.createElement("button");
+      play.className = "primary-button";
+      play.type = "button";
+      play.dataset.play = game.id;
+      play.textContent = game.playUrl ? "Open game ↗" : "Check access";
+
+      actions.append(details, play);
+      info.append(title, meta, description, actions);
+      card.append(art, info);
+
+      return card;
+    }
+
+    function renderGames() {
+      const grid = $("#gameGrid");
+      const games = getVisibleGames();
+
+      grid.replaceChildren();
+
+      if (games.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+
+        const heading = document.createElement("strong");
+        heading.textContent = "No games found";
+
+        const message = document.createElement("p");
+        message.textContent = state.category === "Favourites"
+          ? "Save a game using the heart button to see it here."
+          : "Try another search or category.";
+
+        empty.append(heading, message);
+        grid.appendChild(empty);
+      } else {
+        games.forEach(game => grid.appendChild(createGameCard(game)));
+      }
+
+      $("#gameCount").textContent =
+        `${games.length} game${games.length === 1 ? "" : "s"} in this view`;
+
+      updateFavoriteCount();
+
+      document.querySelectorAll("[data-category]").forEach(button => {
+        const active = button.dataset.category === state.category;
+
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+    }
+
+    function toggleFavorite(id) {
+      const game = CONFIG.games.find(item => item.id === id);
+
+      if (!game) return;
+
+      if (state.favorites.has(id)) {
+        state.favorites.delete(id);
+        showToast(`${game.title} removed from favourites.`);
+      } else {
+        state.favorites.add(id);
+        showToast(`${game.title} added to favourites.`);
+      }
+
+      savePreferences();
+      renderGames();
+
+      if ($("#gameDialog").open && state.selectedGameId === id) {
+        updateDialog(game);
+      }
+    }
+
+    function updateDialog(game) {
+      $("#dialogTitle").textContent = game.title;
+      $("#dialogCategory").textContent = game.category;
+      $("#dialogDescription").textContent = game.description;
+      $("#dialogAvailability").textContent = game.availability;
+
+      $("#dialogFavorite").textContent = state.favorites.has(game.id)
+        ? "♥ Remove favourite"
+        : "♡ Add favourite";
+    }
+
+    function openGameDetails(id) {
+      const game = CONFIG.games.find(item => item.id === id);
+
+      if (!game) {
+        showToast("Game details are unavailable.");
+        return;
+      }
+
+      state.selectedGameId = id;
+      updateDialog(game);
+
+      const dialog = $("#gameDialog");
+
+      if (typeof dialog.showModal === "function") {
+        if (!dialog.open) dialog.showModal();
+      } else {
+        showToast(`${game.title}: ${game.availability}`);
+      }
+    }
+
+    function launchGame(id) {
+      const game = CONFIG.games.find(item => item.id === id);
+
+      if (!game) {
+        showToast("This game could not be found.");
+        return;
+      }
+
+      if (!game.playUrl) {
+        showToast(
+          "Streaming is not connected. This card is a catalogue preview."
+        );
+        openGameDetails(id);
+        return;
+      }
+
+      try {
+        const target = new URL(game.playUrl, window.location.href);
+
+        if (!["https:", "http:"].includes(target.protocol)) {
+          showToast("This launch URL is not supported.");
+          return;
+        }
+
+        window.open(target.href, "_blank", "noopener,noreferrer");
+      } catch (error) {
+        showToast("The configured game URL is invalid.");
+        console.error("CloudVex: Launch URL error.", error);
+      }
+    }
+
+    function bindEvents() {
+      $("#exploreButton").addEventListener("click", () => {
+        $("#games").scrollIntoView({ behavior: "smooth" });
+        $("#searchInput").focus({ preventScroll: true });
+      });
+
+      $("#connectionButton").addEventListener("click", () => {
+        $("#connection").scrollIntoView({ behavior: "smooth" });
+        showToast("Streaming server: not connected.");
+      });
+
+      $("#learnConnection").addEventListener("click", () => {
+        showToast("No cloud gaming provider is connected yet.");
+      });
+
+      $("#searchInput").addEventListener("input", event => {
+        state.query = event.target.value;
+        renderGames();
+      });
+
+      $("#filters").addEventListener("click", event => {
+        const button = event.target.closest("[data-category]");
+
+        if (!button) return;
+
+        state.category = button.dataset.category;
+        renderGames();
+      });
+
+      $("#gameGrid").addEventListener("click", event => {
+        const favorite = event.target.closest("[data-favorite]");
+        const details = event.target.closest("[data-details]");
+        const play = event.target.closest("[data-play]");
+
+        if (favorite) {
+          toggleFavorite(favorite.dataset.favorite);
+        } else if (details) {
+          openGameDetails(details.dataset.details);
+        } else if (play) {
+          launchGame(play.dataset.play);
+        }
+      });
+
+      $("#closeDialog").addEventListener("click", () => {
+        $("#gameDialog").close();
+      });
+
+      $("#dialogFavorite").addEventListener("click", () => {
+        if (state.selectedGameId) {
+          toggleFavorite(state.selectedGameId);
+        }
+      });
+
+      $("#dialogPlay").addEventListener("click", () => {
+        if (state.selectedGameId) {
+          launchGame(state.selectedGameId);
+        }
+      });
+
+      $("#gameDialog").addEventListener("click", event => {
+        if (event.target === $("#gameDialog")) {
+          $("#gameDialog").close();
+        }
+      });
+
+      $("#themeSelect").addEventListener("change", event => {
+        const selected = event.target.value;
+
+        if (!THEMES[selected]) return;
+
+        state.settings.theme = selected;
+        applySettings();
+        savePreferences();
+        showToast("Theme updated.");
+      });
+
+      $("#lightToggle").addEventListener("change", event => {
+        state.settings.lightMode = event.target.checked;
+        applySettings();
+        savePreferences();
+        showToast("Display mode updated.");
+      });
+
+      $("#motionToggle").addEventListener("change", event => {
+        state.settings.reduceMotion = event.target.checked;
+        applySettings();
+        savePreferences();
+        showToast("Motion preference updated.");
+      });
+
+      $("#clearFavorites").addEventListener("click", () => {
+        if (state.favorites.size === 0) {
+          showToast("You have no saved favourites.");
+          return;
+        }
+
+        state.favorites.clear();
+        savePreferences();
+        renderGames();
+        showToast("All favourites cleared.");
+      });
+
+      // Escape is handled natively by supported dialog elements.
+      document.addEventListener("keydown", event => {
+        if (event.key === "/" &&
+            !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) {
+          event.preventDefault();
+          $("#searchInput").focus();
+        }
+      });
+    }
+
+    function initializeApp() {
+      loadPreferences();
+      applySettings();
+      bindEvents();
+      renderGames();
+
+      $("#year").textContent = String(new Date().getFullYear());
+
+      // Register only on secure origins such as HTTPS or localhost.
+      if ("serviceWorker" in navigator &&
+          (location.protocol === "https:" || location.hostname === "localhost")) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js", { scope: "./" })
+            .then(registration => {
+              console.info(
+                "CloudVex: Service worker registered.",
+                registration.scope
+              );
+            })
+            .catch(error => {
+              console.warn(
+                "CloudVex: Service worker registration failed.",
+                error
+              );
+            });
+        }, { once: true });
+      }
+    }
+
+    initializeApp();
+  </script>
+</body>
+  </html>
