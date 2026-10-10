@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "CloudVex — Play Beyond Limits",
+  "short_name": "CloudVex",
+  "description": "Enter your gaming universe with CloudVex. Discover games through a premium, mobile-friendly gaming hub.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#080b16",
+  "theme_color": "#080b16",
+  "categories": [
+    "games",
+    "entertainment"
+  ],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
