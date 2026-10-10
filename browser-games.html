@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b16">
+  <title>CloudVex | Browser Arcade</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 16px;
+      background: #080b16;
+      color: #f4f6ff;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      max-width: 900px;
+      margin: 0 auto 30px;
+    }
+
+    .brand {
+      color: #6ee7ff;
+      font-size: 14px;
+      letter-spacing: 3px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(32px, 8vw, 54px);
+      margin: 18px 0 10px;
+    }
+
+    .subtitle {
+      color: #a8b0cc;
+      line-height: 1.7;
+    }
+
+    .games {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit, minmax(220px, 1fr)
+      );
+      gap: 16px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .card {
+      padding: 22px;
+      border: 1px solid #252d4b;
+      border-radius: 20px;
+      background: linear-gradient(
+        145deg, #171d35, #0d1120
+      );
+    }
+
+    .icon {
+      font-size: 42px;
+    }
+
+    h2 {
+      font-size: 21px;
+    }
+
+    p {
+      color: #b5bdd5;
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 17px;
+      border-radius: 10px;
+      background: #72e5ff;
+      color: #080b16;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .button:hover {
+      background: #b0f2ff;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 24px;
+      color: #72e5ff;
+      text-decoration: none;
+    }
+
+    footer {
+      max-width: 900px;
+      margin: 35px auto 0;
+      color: #8992ad;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">CLOUDVEX ARCADE</div>
+
+    <h1>Enter the <span style="color:#72e5ff">
+      Game Zone.</span></h1>
+
+    <p class="subtitle">
+      Discover games you can play through your
+      mobile browser. Choose a destination below.
+    </p>
+  </header>
+
+  <main class="games">
+    <article class="card">
+      <div class="icon">🕹️</div>
+      <h2>Poki</h2>
+      <p>
+        Explore a collection of casual games,
+        racing games, puzzles and adventures.
+      </p>
+      <a class="button"
+         href="https://poki.com/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Explore Games ↗
+      </a>
+    </article>
+
+    <article class="card">
+      <div class="icon">🎮</div>
+      <h2>CrazyGames</h2>
+      <p>
+        Discover browser-based action, racing,
+        multiplayer and arcade games.
+      </p>
+      <a class="button"
+         href="https://www.crazygames.com/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Explore Games ↗
+      </a>
+    </article>
+
+    <article class="card">
+      <div class="icon">✨</div>
+      <h2>itch.io</h2>
+      <p>
+        Discover indie games, including games
+        available to play directly in a browser.
+      </p>
+      <a class="button"
+         href="https://itch.io/games/html5"
+         target="_blank"
+         rel="noopener noreferrer">
+        Explore Games ↗
+      </a>
+    </article>
+  </main>
+
+  <footer>
+    CloudVex is an independent game discovery hub.
+    Games are hosted by their respective platforms.
+    Availability, device compatibility and pricing
+    depend on each game and provider.
+
+    <br>
+
+    <a class="back" href="./index.html">
+      ← Back to CloudVex Home
+    </a>
+  </footer>
+</body>
+</html>
