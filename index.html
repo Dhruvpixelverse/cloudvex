@@ -1,0 +1,468 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070b16">
+<title>CloudVex — Play Beyond Limits</title>
+<style>
+:root {
+  --bg:#070b16;
+  --panel:#10182b;
+  --blue:#4169ff;
+  --cyan:#27e1ff;
+  --purple:#a044ff;
+  --pink:#ff3edb;
+  --text:#f6f7ff;
+  --muted:#a4b0d0;
+}
+* {box-sizing:border-box}
+html {scroll-behavior:smooth}
+body {
+  margin:0;
+  color:var(--text);
+  font:15px Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at 10% 10%,#182a60 0,transparent 35%),
+    radial-gradient(ellipse at 90% 50%,#32134d 0,transparent 30%),
+    var(--bg);
+  overflow-x:hidden;
+}
+body::before {
+  content:"";
+  position:fixed;
+  inset:-50%;
+  z-index:-1;
+  pointer-events:none;
+  background:conic-gradient(from 0deg,transparent,#3521a322,#0bbdff18,transparent,#ff28e514,transparent);
+  animation:nebula 18s linear infinite;
+}
+@keyframes nebula {to{transform:rotate(360deg)}}
+@keyframes pulse {
+  0%,100% {box-shadow:0 0 8px #5a65ff55}
+  50% {box-shadow:0 0 24px #a044ff99}
+}
+@keyframes float {
+  0%,100% {transform:translateY(0)}
+  50% {transform:translateY(-7px)}
+}
+@keyframes shine {
+  from {background-position:0% 50%}
+  to {background-position:200% 50%}
+}
+@keyframes appear {
+  from {opacity:0;transform:translateY(18px)}
+  to {opacity:1;transform:translateY(0)}
+}
+header {
+  position:sticky;
+  top:0;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:15px 5%;
+  background:#080d1be8;
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid #25335b;
+}
+.logo {
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-1px;
+  background:linear-gradient(90deg,var(--cyan),#8180ff,var(--pink));
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:shine 5s linear infinite;
+}
+.tagline {font-size:10px;color:var(--muted);letter-spacing:2px}
+.search {
+  width:min(390px,45%);
+  padding:12px 16px;
+  color:white;
+  background:#121b31;
+  border:1px solid #34436c;
+  border-radius:14px;
+  outline:none;
+}
+.search:focus {border-color:var(--cyan);box-shadow:0 0 15px #27e1ff33}
+button {font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible {outline:2px solid var(--cyan);outline-offset:3px}
+.btn {
+  padding:12px 18px;
+  border:0;
+  border-radius:12px;
+  color:white;
+  font-weight:bold;
+  background:linear-gradient(110deg,var(--blue),var(--purple),var(--pink));
+  background-size:200% auto;
+  box-shadow:0 5px 22px #714cff44;
+  transition:transform .2s,filter .2s;
+}
+.btn:hover {transform:translateY(-3px);filter:brightness(1.18);animation:shine 2s linear infinite}
+main {max-width:1500px;margin:auto;padding:25px 5% 45px}
+.hero {
+  position:relative;
+  overflow:hidden;
+  min-height:300px;
+  display:flex;
+  align-items:center;
+  padding:clamp(25px,5vw,55px);
+  border:1px solid #5966ff88;
+  border-radius:25px;
+  background:
+    radial-gradient(circle at 85% 20%,#8a36ff99,transparent 30%),
+    radial-gradient(circle at 75% 85%,#00c8ff55,transparent 35%),
+    linear-gradient(120deg,#111a38,#101027 60%,#29143d);
+  animation:appear .8s ease both;
+}
+.hero::after {
+  content:"CLOUDVEX";
+  position:absolute;
+  right:-20px;
+  bottom:-18px;
+  font-size:clamp(50px,10vw,130px);
+  font-weight:900;
+  letter-spacing:-5px;
+  color:#ffffff08;
+  pointer-events:none;
+}
+.hero-content {position:relative;z-index:1;max-width:570px}
+.badge {
+  display:inline-block;
+  padding:7px 12px;
+  border:1px solid #7777ff88;
+  border-radius:30px;
+  background:#342a633d;
+  color:#c8c8ff;
+  font-size:12px;
+}
+h1 {font-size:clamp(38px,6vw,66px);line-height:1.03;margin:20px 0 12px;letter-spacing:-2px}
+.gradient {
+  background:linear-gradient(90deg,var(--cyan),#8b8aff,var(--pink));
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:shine 4s linear infinite;
+}
+.hero p {max-width:440px;color:#b8c6e7;line-height:1.7}
+.actions {display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.secondary {background:#ffffff0b;border:1px solid #6475aa;color:white;box-shadow:none}
+.section-title {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin:34px 0 16px;
+}
+.section-title h2 {margin:0;font-size:22px}
+.section-title p {margin:5px 0 0;color:var(--muted);font-size:12px}
+.filters {display:flex;gap:9px;overflow-x:auto;padding:4px 2px 13px}
+.filter {
+  flex-shrink:0;
+  border:1px solid #29385d;
+  color:#b9c6e5;
+  background:#111a2d;
+  padding:10px 15px;
+  border-radius:30px;
+  transition:.2s;
+}
+.filter:hover,.filter.active {
+  color:white;
+  border-color:#6b76ff;
+  background:linear-gradient(100deg,#4938ce,#1767bd);
+  box-shadow:0 0 17px #5e54ff44;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
+.card {
+  min-width:0;
+  overflow:hidden;
+  background:linear-gradient(145deg,#151f36,#0b1221);
+  border:1px solid #26375b;
+  border-radius:18px;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+  animation:appear .6s ease both;
+}
+.card:hover {
+  transform:translateY(-7px) scale(1.015);
+  border-color:#8664ff;
+  box-shadow:0 12px 32px #482dff30,0 0 12px #27e1ff18;
+}
+.art {
+  height:140px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  background:radial-gradient(circle at 70% 25%,#7a42d7,transparent 35%),linear-gradient(135deg,#182e62,#12172d,#371847);
+}
+.art::before {
+  content:"";
+  position:absolute;
+  inset:-80%;
+  background:linear-gradient(115deg,transparent 42%,#ffffff16 50%,transparent 58%);
+  transform:translateX(-50%);
+  transition:transform .7s;
+}
+.card:hover .art::before {transform:translateX(50%)}
+.art span {font-size:35px;font-weight:900;text-shadow:0 4px 22px #0008;z-index:1}
+.pokemon {background:radial-gradient(circle at 70% 30%,#f6d64b88,transparent 30%),linear-gradient(135deg,#2566a4,#163150,#60366c)}
+.fighting {background:radial-gradient(circle at 70% 25%,#ff814d99,transparent 30%),linear-gradient(135deg,#702d49,#202043,#274b85)}
+.racing {background:radial-gradient(circle at 70% 25%,#ff315f88,transparent 30%),linear-gradient(135deg,#193b66,#17152c,#722b4b)}
+.adventure {background:radial-gradient(circle at 70% 25%,#41d4ba88,transparent 30%),linear-gradient(135deg,#226d68,#173349,#39316c)}
+.info {padding:14px}
+.info h3 {font-size:15px;margin:0 0 7px;line-height:1.4}
+.info p {color:var(--muted);font-size:12px;margin:0;min-height:32px;line-height:1.5}
+.meta {display:flex;justify-content:space-between;align-items:center;gap:7px;margin-top:12px}
+.platform {font-size:10px;color:#b4c6ed;border:1px solid #33456a;padding:5px 7px;border-radius:7px}
+.play {
+  padding:8px 12px;
+  color:white;
+  background:linear-gradient(100deg,#4b5dff,#963fff);
+  border:0;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:bold;
+  transition:.2s;
+}
+.play:hover {filter:brightness(1.25);box-shadow:0 0 15px #854cff77}
+.empty {display:none;text-align:center;color:var(--muted);padding:25px}
+.panels {display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:30px}
+.panel {
+  padding:22px;
+  border:1px solid #29375b;
+  border-radius:18px;
+  background:linear-gradient(145deg,#141e33,#0b1220);
+}
+.panel h3 {margin:0 0 8px}
+.panel p {color:var(--muted);font-size:13px;line-height:1.7}
+.stats {display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.stat {padding:13px;background:#ffffff06;border:1px solid #2b3856;border-radius:12px}
+.stat strong {display:block;font-size:20px}
+.stat span {font-size:11px;color:var(--muted)}
+.notice {padding:13px;margin-top:15px;border:1px solid #66519a;border-radius:12px;color:#d5ccff;background:#7a46ff13;font-size:12px;line-height:1.6}
+footer {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  border-top:1px solid #202c47;
+  padding-top:20px;
+  margin-top:35px;
+  color:#8795b7;
+  font-size:12px;
+}
+.toast {
+  position:fixed;
+  bottom:22px;
+  left:50%;
+  transform:translate(-50%,20px);
+  opacity:0;
+  z-index:20;
+  pointer-events:none;
+  width:max-content;
+  max-width:90%;
+  padding:14px 18px;
+  border:1px solid #596bff;
+  border-radius:13px;
+  background:#141d35;
+  color:white;
+  box-shadow:0 8px 35px #0008;
+  transition:.25s;
+}
+.toast.show {opacity:1;transform:translate(-50%,0)}
+@media(max-width:1000px) {
+  .grid {grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:650px) {
+  header {padding:12px 14px;flex-wrap:wrap}
+  .brand {font-size:20px}
+  .search {width:100%;order:3}
+  header .btn {padding:10px 12px;font-size:12px}
+  main {padding:17px 13px 30px}
+  .hero {min-height:310px;padding:25px 20px}
+  .grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+  .art {height:112px}
+  .art span {font-size:27px}
+  .info {padding:11px}
+  .info h3 {font-size:13px}
+  .info p {font-size:11px}
+  .meta {align-items:flex-start;flex-direction:column}
+  .play {width:100%}
+  .panels {grid-template-columns:1fr}
+  .stats {gap:6px}
+  .stat {padding:9px}
+  .stat strong {font-size:17px}
+  .section-title h2 {font-size:19px}
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">◈ CLOUDVEX</div>
+    <div class="tagline">PLAY BEYOND LIMITS</div>
+  </div>
+  <input class="search" id="search" type="search" placeholder="🔎 Search games..." aria-label="Search games">
+  <button class="btn" id="notify">♧ Updates</button>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <span class="badge">✦ YOUR NEXT ADVENTURE STARTS HERE</span>
+      <h1>ENTER THE<br><span class="gradient">GAMEVERSE.</span></h1>
+      <p>Discover anime battles, legendary creatures, racing adventures and more — all in one gaming hub built for your phone.</p>
+      <div class="actions">
+        <button class="btn" id="explore">🎮 Explore Games</button>
+        <button class="btn secondary" id="how">How It Works ↗</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-title" id="games">
+    <div><h2>🔥 Popular Games</h2><p>Explore your next favourite adventure.</p></div>
+    <button class="filter" id="reset">Reset filters ↺</button>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter active" data-filter="all">✦ All Games</button>
+    <button class="filter" data-filter="anime">⚡ Anime</button>
+    <button class="filter" data-filter="rpg">🌍 RPG & Adventure</button>
+    <button class="filter" data-filter="fighting">🥊 Fighting</button>
+    <button class="filter" data-filter="racing">🏎️ Racing</button>
+  </div>
+
+  <section class="grid" id="gameGrid">
+    <article class="card" data-name="naruto shippuden ultimate ninja storm 4" data-category="anime fighting">
+      <div class="art fighting"><span>NARUTO</span></div>
+      <div class="info"><h3>Naruto Shippuden: Storm 4</h3><p>Epic ninja battles and legendary rivals.</p><div class="meta"><span class="platform">PC · Action</span><button class="play" data-game="Naruto Shippuden: Storm 4">Details ↗</button></div></div>
+    </article>
+    <article class="card" data-name="pokemon sword shield" data-category="anime rpg">
+      <div class="art pokemon"><span>POKÉMON</span></div>
+      <div class="info"><h3>Pokémon Sword / Shield</h3><p>Explore a world full of Pokémon.</p><div class="meta"><span class="platform">Console · RPG</span><button class="play" data-game="Pokémon Sword / Shield">Details ↗</button></div></div>
+    </article>
+    <article class="card" data-name="pokemon legends arceus" data-category="anime rpg">
+      <div class="art adventure"><span>ARCEUS</span></div>
+      <div class="info"><h3>Pokémon Legends: Arceus</h3><p>Discover the ancient Pokémon world.</p><div class="meta"><span class="platform">Console · RPG</span><button class="play" data-game="Pokémon Legends: Arceus">Details ↗</button></div></div>
+    </article>
+    <article class="card" data-name="dragon ball z kakarot" data-category="anime fighting rpg">
+      <div class="art fighting"><span>DRAGON BALL</span></div>
+      <div class="info"><h3>Dragon Ball Z: Kakarot</h3><p>Experience an epic anime adventure.</p><div class="meta"><span class="platform">PC · Action</span><button class="play" data-game="Dragon Ball Z: Kakarot">Details ↗</button></div></div>
+    </article>
+    <article class="card" data-name="racing zone" data-category="racing">
+      <div class="art racing"><span>RACE</span></div>
+      <div class="info"><h3>Racing Zone</h3><p>Speed, tracks and racing challenges.</p><div class="meta"><span class="platform">Coming soon</span><button class="play" data-game="Racing Zone">Details ↗</button></div></div>
+    </article>
+    <article class="card" data-name="adventure world" data-category="rpg">
+      <div class="art adventure"><span>QUEST</span></div>
+      <div class="info"><h3>Adventure World</h3><p>Explore a mysterious open world.</p><div class="meta"><span class="platform">Coming soon</span><button class="play" data-game="Adventure World">Details ↗</button></div></div>
+    </article>
+    <article class="card" data-name="pokemon scarlet violet" data-category="anime rpg">
+      <div class="art pokemon"><span>SCARLET</span></div>
+      <div class="info"><h3>Pokémon Scarlet / Violet</h3><p>Discover new regions and creatures.</p><div class="meta"><span class="platform">Console · RPG</span><button class="play" data-game="Pokémon Scarlet / Violet">Details ↗</button></div></div>
+    </article>
+    <article class="card" data-name="ultimate fighting arena" data-category="fighting">
+      <div class="art fighting"><span>ARENA</span></div>
+      <div class="info"><h3>Ultimate Fighting Arena</h3><p>Master your skills in the arena.</p><div class="meta"><span class="platform">Coming soon</span><button class="play" data-game="Ultimate Fighting Arena">Details ↗</button></div></div>
+    </article>
+  </section>
+  <div class="empty" id="empty">No games found. Try another search or category.</div>
+
+  <section class="panels">
+    <div class="panel">
+      <h3>☁️ Your CloudVex Hub</h3>
+      <p>Your game library, ready to grow. This website is the front end for your future cloud gaming setup.</p>
+      <div class="stats">
+        <div class="stat"><strong>08</strong><span>Catalogue titles</span></div>
+        <div class="stat"><strong>📱</strong><span>Mobile ready</span></div>
+        <div class="stat"><strong>UI</strong><span>Prototype mode</span></div>
+      </div>
+      <div class="notice">Heads up: these are catalogue previews. Real cloud play needs a compatible remote gaming server and legal access to each game.</div>
+    </div>
+    <div class="panel">
+      <h3>✨ Free Interface</h3>
+      <p>No premium upgrade needed for this design. You can explore the catalogue and test the interface for free.</p>
+      <button class="btn" id="setup">View Setup Checklist</button>
+      <p id="serverStatus">Server status: Not connected</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 CloudVex · Play Beyond Limits</span>
+    <span>Free interface · Cloud streaming not connected</span>
+  </footer>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const toastEl = document.getElementById('toast');
+let toastTimer;
+function toast(message) {
+  toastEl.textContent = message;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 3000);
+}
+const search = document.getElementById('search');
+const cards = [...document.querySelectorAll('.card')];
+const filters = [...document.querySelectorAll('[data-filter]')];
+let activeFilter = 'all';
+
+function applyFilters() {
+  const query = search.value.toLowerCase().trim();
+  let count = 0;
+  cards.forEach(card => {
+    const nameMatch = card.dataset.name.includes(query);
+    const categoryMatch = activeFilter === 'all' ||
+      card.dataset.category.split(' ').includes(activeFilter);
+    const visible = nameMatch && categoryMatch;
+    card.style.display = visible ? '' : 'none';
+    if (visible) count++;
+  });
+  document.getElementById('empty').style.display = count ? 'none' : 'block';
+}
+search.addEventListener('input', applyFilters);
+filters.forEach(button => button.addEventListener('click', () => {
+  activeFilter = button.dataset.filter;
+  filters.forEach(item => item.classList.toggle('active', item === button));
+  applyFilters();
+}));
+document.getElementById('reset').addEventListener('click', () => {
+  search.value = '';
+  activeFilter = 'all';
+  filters.forEach(item => item.classList.toggle('active', item.dataset.filter === 'all'));
+  applyFilters();
+});
+document.getElementById('explore').addEventListener('click', () => {
+  document.getElementById('games').scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('how').addEventListener('click', () => {
+  toast('CloudVex is the gaming hub. A compatible streaming host must be connected before real gameplay can launch.');
+});
+document.getElementById('notify').addEventListener('click', () => {
+  toast('You are all caught up. No cloud gaming server is connected yet.');
+});
+document.getElementById('setup').addEventListener('click', () => {
+  toast('Checklist: choose a compatible host, install your game legally, connect a streaming client, then test your network.');
+});
+document.querySelectorAll('[data-game]').forEach(button => {
+  button.addEventListener('click', () => {
+    toast(button.dataset.game + ' — catalogue preview only; streaming is not connected.');
+  });
+});
+</script>
+</body>
+</html>
+```
